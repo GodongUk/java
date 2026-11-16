@@ -2,6 +2,9 @@ package ex01;
 
 public class Add {
     public void add(String[] args) {
+        // String[] data;
+        // String data[0] = null;
+        
         String data1 = null;
         String data2 = null;
         try {
