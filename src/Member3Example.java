@@ -12,7 +12,7 @@ public class Member3Example {
         System.out.print("scores: {");
         for (int i = 0; i < cloned.scores.length; i++) {
             System.out.print(cloned.scores[i]);
-            System.out.print((i == (cloned.scores.length - 1)) ? "" : "");
+            System.out.print((i == (cloned.scores.length - 1)) ? "" : ", ");
         }
         System.out.println("}");
         System.out.println("car: " + cloned.car.model);
@@ -25,7 +25,7 @@ public class Member3Example {
         System.out.print("scores: {");
         for (int i = 0; i < original.scores.length; i++) {
             System.out.print(original.scores[i]);
-            System.out.print((i == (original.scores.length - 1)) ? "" : "");
+            System.out.print((i == (original.scores.length - 1)) ? "" : ", ");
         }
         System.out.println("}");
         System.out.println("car: " + original.car.model);
