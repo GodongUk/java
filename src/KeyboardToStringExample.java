@@ -7,7 +7,7 @@ public class KeyboardToStringExample {
         System.out.print("입력: ");
         int readByteNo = System.in.read(bytes);
 
-        String str1 = new String(bytes, 0, readByteNo - 2);
+        String str = new String(bytes, 0, readByteNo - 2);
         System.out.println(str);
     }
 }
