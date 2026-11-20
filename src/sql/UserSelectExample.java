@@ -1,0 +1,25 @@
+package sql;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class UserSelectExample {
+    public static void main(String[] args) {
+        Connection conn = null;
+        try{
+            //JDBC Driver 등록
+            Class.forName("oracle.jdbc.OracleDriver");
+
+             // 연결하기
+            conn = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@//localhost:1521/XE",
+                    "system",
+                    "1234");
+
+        //매개변수화된 SQL 문 작성
+        String sql = "" +
+        "SELECT userid, username, userpassword, userage, useremail " 
+
+        }
+    }
+}

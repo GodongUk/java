@@ -81,13 +81,32 @@ public class Book implements Manageable {
     public void loadFromFile() {
         try {
             FileReader fr = new FileReader("C:/Temp/book.txt");
-            OutputStream os = System.out;
+
             int data;
+            String temp = "";
+            int count = 0;
             while ((data = fr.read()) != -1) {
-                
-                System.out.write(data);
+                if (data == 13) {
+                    continue;
+                }
+                if (data == 10) {
+                    if (count == 0) {
+                        listId.add(Integer.parseInt(temp));
+                    } else if (count == 1) {
+                        listTitle.add(temp);
+                    } else if (count == 2) {
+                        listAuthor.add(temp);
+                    }
+                    temp = "";
+                    count++;
+                    if (count == 3) {
+                        count = 0;
+                    }
+                } else {
+                    temp += (char) data;
+                }
             }
-            System.out.println(data);
+            fr.close();
         } catch (Exception e) {
             System.out.println("에러뜸");
         }
