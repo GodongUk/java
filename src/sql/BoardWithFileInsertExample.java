@@ -1,3 +1,4 @@
+
 package sql;
 
 import java.io.FileInputStream;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 public class BoardWithFileInsertExample {
     public static void main(String[] args) {
         Connection conn = null;
+
         try {
             // JDBC Driver 등록
             Class.forName("oracle.jdbc.OracleDriver");
@@ -18,47 +20,56 @@ public class BoardWithFileInsertExample {
             conn = DriverManager.getConnection(
                     "jdbc:oracle:thin:@//localhost:1521/XE",
                     "system",
-                    "1234"
-            );
-            //매개변수화된 SQL 문 작성
-            String sql = "" + 
-            "INSERT INTO boards (bno, btitle, bcontent, bwriter, bdate, bfilename, bfiledata) " +
-            "VALUES (SEQ_BNO.NEXTVAL, ?, ?, ?, SYSDATE, ?, ?)";
-            
-            //PreparedStatement 얻기 및 값 지정
-             PreparedStatement pstmt = conn.prepareStatement(sql, new String[] {"bno"});
-             pstmt.setString(1, "눈오는 날");
+                    "1234");
+
+            // 매개변수화된 SQL 문 작성
+            String sql = ""
+                    + "INSERT INTO boards "
+                    + "(bno, btitle, bcontent, bwriter, bdate, bfilename, bfiledata) "
+                    + "VALUES (SEQ_BNO.NEXTVAL, ?, ?, ?, SYSDATE, ?, ?)";
+
+            // PreparedStatement 얻기 및 값 지정
+            PreparedStatement pstmt = conn.prepareStatement(sql, new String[] { "bno" });
+
+            pstmt.setString(1, "눈오는 날");
             pstmt.setString(2, "함박눈이 내려요");
             pstmt.setString(3, "winter");
             pstmt.setString(4, "cover.jpg");
-            pstmt.setBlob(5, new FileInputStream("src/sql/cover.jpg"));
-            
+
+            FileInputStream fis = new FileInputStream("src/sql/cover.jpg");
+
+            pstmt.setBlob(5, fis);
+
             // SQL 문 실행
             int rows = pstmt.executeUpdate();
             System.out.println("저장된 행 수 : " + rows);
 
-            //bno값 얻기
-            if(rows == 1){
+            // bno 값 얻기
+            if (rows == 1) {
                 ResultSet rs = pstmt.getGeneratedKeys();
-                if(rs.next()){
+
+                if (rs.next()) {
                     int bno = rs.getInt(1);
-                    System.out.println("저장된 bno:" + bno);
+                    System.out.println("저장된 bno: " + bno);
                 }
-            rs.close();    
+
+                rs.close();
             }
-            //PreparedStatement 닫기
+
+            fis.close();
             pstmt.close();
-            
-            catch(Exception e){
-                e.printStackTrace();
-            }finally{
-                if(conn != null){
-                    try {
-                        conn.close();
-                    }catch(SQLException e){}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
-        
+        }
     }
-}
 }
