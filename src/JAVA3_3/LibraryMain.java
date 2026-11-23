@@ -7,6 +7,7 @@ public class LibraryMain {
         Scanner scanner = new Scanner(System.in);
         UserManager userManager = new UserManager();
         BookManager bookManager = new BookManager();
+        RentManager rentManager = new RentManager();
         // Users users = new Users();
         int selectNum = 0;
         String selectStr = "";
@@ -48,6 +49,11 @@ public class LibraryMain {
                     selectNum = Integer.parseInt(selectStr);
                     if (selectNum == 1) {
                         System.out.println("도서 대여 화면");
+                        bookManager.booksList();
+                        System.out.println("원하는 도서의 번호를 입력하세요");
+                        String booknumstr = scanner.nextLine();
+                        int booknum = Integer.parseInt(booknumstr);
+                        rentManager.bookRent(booknum);
                     } else if (selectNum == 2) {
                         System.out.println("도서반납 화면");
                     } else if (selectNum == 3) {
@@ -80,7 +86,20 @@ public class LibraryMain {
                 System.out.println("회원가입이 완료 되었습니다.");
 
             } else if (selectNum == 3) {
-                System.out.println("도서 검색");
+                System.out.println("1. 전체 목록 보기");
+                System.out.println("2. 도서 검색");
+                selectStr = scanner.nextLine();
+                selectNum = Integer.parseInt(selectStr);
+                if (selectNum == 1) {
+                    System.out.println("전체 목록");
+                    bookManager.booksList();
+                } else if (selectNum == 2) {
+                    System.out.println("검색할 책 정보를 입력하세요");
+                    String bookName = scanner.nextLine();
+
+                    bookManager.booksSearch(bookName);
+                }
+
             } else if (selectNum == 4) {
                 System.out.println("도서관을 탈출합니다.");
             }
